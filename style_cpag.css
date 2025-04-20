@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Fira Sans", sans-serif;
+    background-color: rgb(222, 179, 219);
+}
+
+nav {
+    width: 80px;
+    margin-bottom: 30px;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 10px;
+    border: 1px solid #b22e7d;
+    background-color: #c96fbd;
+}
+
+nav a {
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+}
+
+footer {
+    text-align: center;
+    margin-top: 40px;
+    color: #000;
+}
+
+hr {
+    border: 0;
+    border-top: 2px solid #b32ca1;
+    margin-left: 20px;
+    margin-right: 20px;
+}

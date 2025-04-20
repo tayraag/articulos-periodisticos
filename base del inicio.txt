@@ -1,0 +1,101 @@
+import os
+from datetime import datetime
+
+class Articulo:
+      
+    def __init__(self, titulo, autor, texto):
+        if len(titulo.strip()) < 5:
+            raise ValueError("El título debe tener al menos 10 caracteres.")
+        if len(texto.strip()) < 10:
+            raise ValueError("El texto debe tener al menos 10 caracteres.")
+
+        self.titulo = titulo.strip()
+        self.autor = self.normalizar_autor(autor)
+        self.texto = self.truncate_text(texto.strip() if len(texto.strip()) >= 10 else "Contenido no disponible")
+
+    def normalizar_autor(self, autor):
+        return " ".join(p.capitalize() for p in autor.strip().split())
+
+    def to_html(self):
+        return f"""
+        <article>
+            <h2>{self.titulo}</h2>
+            <p><strong>Autor:</strong> {self.autor}</p>
+            <p>{self.texto}</p>
+        </article>
+        """
+    
+    def contiene_palabra_clave(self, palabra):
+        return palabra.lower() in self.texto.lower()
+    
+    @staticmethod
+    def truncate_text(texto, length=300):
+        if len(texto) > length:
+            return texto[:length] + "..."
+        else:
+            return texto
+      
+
+class ParserHtml:
+
+    def __init__(self, articulos):
+        self.articulos = articulos
+    
+    def filtrar_por_palabra(self, palabra):
+        return [a for a in self.articulos if a.contiene_palabra_clave(palabra)]
+
+    def genera_html(self):
+        fecha_hoy = datetime.now().strftime("%Y-%m-%d")
+
+        html = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Articulos Periodisticos</title>
+        </head>
+        <body>
+            <header>
+                <h1 style="color: black; font-size: 2em; text-align: center;">Articulos Periodisticos</h1>
+            </header>
+        """
+
+        for articulo in self.articulos:
+            html += articulo.to_html()
+            html += """
+                <hr>
+            """   
+
+        html += f"""
+            <footer style="text-align: center;">
+                <p>Fecha de publicación: {fecha_hoy}</p>   
+            </footer>
+        </body>
+        </html>
+        """
+        return html
+    
+if __name__ == "__main__":
+    articulos_ejemplo = [
+        Articulo("El clima en la ciudad", "  juan perez  ", "Hoy el clima es soleado y cálido. Las temperaturas se mantienen alrededor de los 28°C durante el día, lo que lo convierte en un día ideal para disfrutar de actividades al aire libre. La brisa suave ayuda a mitigar el calor, creando condiciones agradables para caminar por el parque o ir a la playa. A lo largo de la tarde, las nubes comenzarán a cubrir parcialmente el cielo, pero no se esperan lluvias. En la noche, la temperatura descenderá a unos 18°C, lo que permitirá una noche fresca y agradable. Este tipo de clima es típico en los meses de primavera, cuando las temperaturas son moderadas y las lluvias aún no se presentan con regularidad. Los expertos recomiendan aprovechar estos días para realizar actividades que mejoren nuestra salud física y mental, como hacer ejercicio al aire libre o simplemente disfrutar de una caminata por la ciudad. Las personas que viven en áreas urbanas deben aprovechar el buen clima para desconectarse del ajetreo cotidiano y disfrutar de la naturaleza que la ciudad ofrece, ya sea en parques, jardines o en la orilla de algún río cercano. También se puede disfrutar de una buena taza de café mientras se observa el paisaje urbano, algo que puede ser muy relajante para aquellos que necesitan un respiro de la rutina diaria. No olvides usar protector solar si planeas pasar mucho tiempo al sol, ya que la exposición prolongada puede ser perjudicial para la piel."),
+        Articulo("Tecnología", "Ana Gomez", "Las últimas tendencias en tecnología son fascinantes."),
+        Articulo("Salud", "Luis Martinez", "Es importante cuidar nuestra salud mental y física."),
+        Articulo("Ciencia", "Maria Lopez", "Los avances científicos están cambiando el mundo.")
+    ]
+
+    parser = ParserHtml(articulos_ejemplo)
+      
+    ruta_actual = os.path.dirname(__file__)
+    """ruta_archivo = os.path.join(ruta_actual, "articulos.html")
+
+    with open(ruta_archivo, "w", encoding="utf-8") as f:
+        f.write(parser.genera_html())"""
+    
+    for i, articulo in enumerate(articulos_ejemplo, start=1):
+        ruta = os.path.join(ruta_actual, f"articulo_{i}.html")
+        with open(ruta, "w", encoding="utf-8") as f:
+            f.write(ParserHtml([articulo]).genera_html())
+
+    filtrados = parser.filtrar_por_palabra("clima")
+    for articulo in filtrados:
+        print(articulo.titulo)
