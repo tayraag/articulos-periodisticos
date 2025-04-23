@@ -1,36 +1,98 @@
+:root {
+    --fondo-principal: #e6cfaa;
+    --texto-claro: #F7EDE2;
+    --texto-oscuro: #de6e6c;
+    --borde-color: #F59D9B;
+    --acento-1: #dae6cc;
+    --acento-2: #F5CAC3;
+    --titulos-oscuro: #681b32;
+}
+
 body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--fondo-principal);
+    color: var(--texto-oscuro);
     margin: 0;
     padding: 0;
-    font-family: "Fira Sans", sans-serif;
-    background-color: rgb(222, 179, 219);
 }
 
-nav {
-    width: 80px;
-    margin-bottom: 30px;
-    margin-top: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
-    padding: 10px;
-    border: 1px solid #b22e7d;
-    background-color: #c96fbd;
+.navbar {
+    background-color: var(--acento-1);
+    padding: 1rem;
 }
 
-nav a {
-    text-decoration: none;
-    color: #000000;
+.navbar-brand {
+    color: var(--titulos-oscuro);
+    font-size: 1.5rem;
     font-weight: bold;
+    text-transform: uppercase;
 }
 
-footer {
-    text-align: center;
-    margin-top: 40px;
-    color: #000;
+.navbar-brand:hover {
+    color: var(--borde-color);
+}
+
+.container {
+    background-color: var(--texto-claro);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+article {
+    background-color: var(--acento-2);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+article h2 {
+    color: var(--titulos-oscuro);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+article p {
+    color: var(--texto-oscuro);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.pagination {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    justify-content: center;
+}
+
+.page-link {
+    color: var(--texto-oscuro);
+    background-color: var(--texto-claro);
+    border: 1px solid var(--borde-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.page-link:hover {
+    background-color: var(--borde-color);
+    color: var(--texto-claro);
+}
+
+.page-item.active .page-link {
+    background-color: var(--acento-2);
+    color: var(--titulos-oscuro);
+    border-color: var(--borde-color);
 }
 
 hr {
-    border: 0;
-    border-top: 2px solid #b32ca1;
-    margin-left: 20px;
-    margin-right: 20px;
+    border: 1px solid var(--borde-color);
+    margin: 0 0 0.2rem 0 !important;
+}
+
+footer {
+    background-color: var(--acento-1);
+    height: 3rem;
+    color: var(--texto-oscuro);
+    font-size: 0.9rem;
+    border-radius: 8px;
+    padding: 1rem 1rem;
+    margin-top: 0 !important;
 }
